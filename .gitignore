@@ -1,4 +1,3 @@
 .idea
-target
-flowdock-teamcity-plugin-server/target
 *.iml
+target/
