@@ -1,4 +1,4 @@
-package com.adrianfaciu.teamcity.flowdockPlugin
+package com.adrianfaciu.teamcity.flowdockPlugin.ui
 
 import jetbrains.buildServer.serverSide.ProjectManager
 import jetbrains.buildServer.serverSide.SProject

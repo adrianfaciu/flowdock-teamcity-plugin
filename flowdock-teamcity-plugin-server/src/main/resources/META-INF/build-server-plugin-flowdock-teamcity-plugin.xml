@@ -5,6 +5,14 @@
        default-autowire="constructor">
 
     <bean id="flowdockProjectTab"
-          class="com.adrianfaciu.teamcity.flowdockPlugin.FlowdockProjectTab"
+          class="com.adrianfaciu.teamcity.flowdockPlugin.ui.FlowdockProjectTab"
+          init-method="register"/>
+
+    <bean id="FlowdockAdminTab"
+          class="com.adrianfaciu.teamcity.flowdockPlugin.ui.FlowdockAdminTab"
+          init-method="register"/>
+
+    <bean id="flowdockBuildTab"
+          class="com.adrianfaciu.teamcity.flowdockPlugin.ui.FlowdockBuildTypeTab"
           init-method="register"/>
 </beans>
