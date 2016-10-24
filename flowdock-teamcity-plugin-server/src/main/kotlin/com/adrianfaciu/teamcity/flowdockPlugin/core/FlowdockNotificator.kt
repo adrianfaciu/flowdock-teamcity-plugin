@@ -13,18 +13,12 @@ import jetbrains.buildServer.serverSide.problems.BuildProblemInfo
 import jetbrains.buildServer.tests.TestName
 import jetbrains.buildServer.users.SUser
 import jetbrains.buildServer.vcs.VcsRoot
-import java.util.*
 
 class FlowdockNotificator : Notificator {
     private var LOG: Logger = Loggers.ACTIVITIES
 
     constructor(notificatorRegistry: NotificatorRegistry) {
-        LOG.info(notificatorRegistry.toString())
-
-        val userProps = ArrayList<UserPropertyInfo>()
-        notificatorRegistry.register(this, userProps)
-
-        LOG.info("Registered new notificator")
+        notificatorRegistry.register(this)
     }
 
     fun register(){
@@ -116,8 +110,6 @@ class FlowdockNotificator : Notificator {
     }
 
     fun sendNotification(){
-        Loggers.SERVER.info("yeahhhhhhhh")
-        Loggers.SERVER.error("Critical error")
         LOG.info("Notification handled")
     }
 }
