@@ -1,12 +1,28 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.core
 
+import com.adrianfaciu.teamcity.flowdockPlugin.notifications.Author
+import com.adrianfaciu.teamcity.flowdockPlugin.notifications.FlowdockNotification
 import com.github.kittinunf.fuel.Fuel
+import com.google.gson.GsonBuilder
 
 class FlowdockManager {
     fun sendNotification(){
 
         var url = "testurl.com"
-        var mesageToPost = """
+
+        var notification =  FlowdockNotification()
+        // set all objects and add constructor
+
+        val builder = GsonBuilder()
+        val gson = builder.create()
+        var messageBody = gson.toJson(notification)
+
+        Fuel.post(url).body(messageBody).response()
+    }
+}
+
+/*
+
 {
 "flow_token": "e9ce795411351be641ad845a4b910289",
   "event": "activity",
@@ -27,7 +43,5 @@ class FlowdockManager {
     }
   }
 }
-"""
-        Fuel.post(url).body(mesageToPost).response()
-    }
-}
+
+ */
