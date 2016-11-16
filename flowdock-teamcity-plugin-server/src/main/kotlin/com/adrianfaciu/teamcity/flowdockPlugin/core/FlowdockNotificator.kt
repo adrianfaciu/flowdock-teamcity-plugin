@@ -111,5 +111,8 @@ class FlowdockNotificator : Notificator {
 
     fun sendNotification(){
         LOG.info("Notification handled")
+
+        var manager = FlowdockManager()
+        manager.sendNotification()
     }
 }

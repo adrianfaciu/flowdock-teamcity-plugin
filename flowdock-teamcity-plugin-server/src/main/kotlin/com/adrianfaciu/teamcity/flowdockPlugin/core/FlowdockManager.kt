@@ -11,13 +11,14 @@ class FlowdockManager {
         var url = "testurl.com"
 
         var notification =  FlowdockNotification()
-        // set all objects and add constructor
+        // TODO set all objects and add constructor
 
         val builder = GsonBuilder()
         val gson = builder.create()
         var messageBody = gson.toJson(notification)
 
-        Fuel.post(url).body(messageBody).response()
+        //TODO Add error handling
+        var response = Fuel.post(url).body(messageBody).response()
     }
 }
 
