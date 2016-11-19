@@ -1,5 +1,17 @@
 ## TeamCity server-side plugin
 
+Work to do:
+- decide and implement UI
+- figure out best notification schema; custom messages; threads;
+- log manager (in util)
+- settings manager/repository (in util)
+- add tests
+- refactor
+- update plugin info (xml file)
+- update readme
+- test @work and make updates
+- publish to github
+
 Add mote info:
 - details
 - usage
