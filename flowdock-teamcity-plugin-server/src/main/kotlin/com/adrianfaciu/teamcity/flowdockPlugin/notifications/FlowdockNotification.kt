@@ -1,7 +1,7 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.notifications
 
 class FlowdockNotification {
-    var author: Author? = null
+    var author: NotificationAuthor? = null
 
     var external_thread_id: String? = null
 
@@ -9,7 +9,7 @@ class FlowdockNotification {
 
     var event: String? = null
 
-    var thread: Thread? = null
+    var thread: NotificationThread? = null
 
     var flow_token: String? = null
 

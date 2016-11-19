@@ -1,48 +1,38 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.core
 
-import com.adrianfaciu.teamcity.flowdockPlugin.notifications.Author
+import com.adrianfaciu.teamcity.flowdockPlugin.notifications.NotificationAuthor
 import com.adrianfaciu.teamcity.flowdockPlugin.notifications.FlowdockNotification
+import com.adrianfaciu.teamcity.flowdockPlugin.notifications.NotificationStatus
+import com.adrianfaciu.teamcity.flowdockPlugin.notifications.NotificationThread
 import com.github.kittinunf.fuel.Fuel
 import com.google.gson.GsonBuilder
+import com.intellij.openapi.diagnostic.Logger
+import jetbrains.buildServer.log.Loggers
 
 class FlowdockManager {
-    fun sendNotification(){
+    private var LOG: Logger = Loggers.ACTIVITIES
 
-        var url = "testurl.com"
+    fun sendNotification(){
+        var url = "https://api.flowdock.com/messages"
 
         var notification =  FlowdockNotification()
-        // TODO set all objects and add constructor
+        notification.flow_token = "e9ce795411351be641ad845a4b910289"
+        notification.event = "activity"
+        notification.author = NotificationAuthor("Adrian","https://avatars.githubusercontent.com/u/3017123?v=3")
+        notification.title = "Build status"
+
+        var thread = NotificationThread()
+        thread.title = "My New title"
+        thread.body = "My notification thread body"
+        thread.status = NotificationStatus("green","open")
+
+        notification.thread = thread;
 
         val builder = GsonBuilder()
         val gson = builder.create()
         var messageBody = gson.toJson(notification)
 
-        //TODO Add error handling
         var response = Fuel.post(url).body(messageBody).response()
+        this.LOG.info(response.toString())
     }
 }
-
-/*
-
-{
-"flow_token": "e9ce795411351be641ad845a4b910289",
-  "event": "activity",
-  "author": {
-    "name": "Marty",
-    "avatar": "https://avatars.githubusercontent.com/u/3017123?v=3"
-  },
-  "title": "updated ticket",
-  "external_thread_id": "1234567",
-  "thread": {
-    "title": "Polish the flux capacitor",
-    "fields": [{ "label": "Dustiness", "value": "5 - severe" }],
-    "body": "The flux capacitor has been in storage for more than 30 years and it needs to be spick and span for the re-launch.",
-    "external_url": "https://example.com/projects/bttf/tickets/1234567",
-    "status": {
-      "color": "green",
-      "value": "open"
-    }
-  }
-}
-
- */
