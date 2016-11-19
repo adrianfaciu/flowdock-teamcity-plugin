@@ -11,9 +11,13 @@ class FlowdockNotification {
 
     var thread: NotificationThread? = null
 
+    var thread_id: String? = null
+
+    var body: String? = null
+
     var flow_token: String? = null
 
     override fun toString(): String {
-        return "ClassPojo [author = $author, external_thread_id = $external_thread_id, title = $title, event = $event, thread = $thread, flow_token = $flow_token]"
+        return "[author = $author, body = $body, external_thread_id = $external_thread_id, title = $title, event = $event, thread = $thread, thread_id = $thread_id, flow_token = $flow_token]"
     }
 }
