@@ -1,6 +1,7 @@
 ## TeamCity server-side plugin
 
 Work to do:
+- DI !
 - decide and implement UI
 - figure out best notification schema; custom messages; threads;
 - log manager (in util)
