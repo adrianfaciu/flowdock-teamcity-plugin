@@ -3,15 +3,12 @@ package com.adrianfaciu.teamcity.flowdockPlugin.core
 import com.adrianfaciu.teamcity.flowdockPlugin.notifications.NotificationAuthor
 import com.adrianfaciu.teamcity.flowdockPlugin.notifications.FlowdockNotification
 import com.adrianfaciu.teamcity.flowdockPlugin.notifications.NotificationThread
+import com.adrianfaciu.teamcity.flowdockPlugin.util.logInfoMessage
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import com.google.gson.GsonBuilder
-import com.intellij.openapi.diagnostic.Logger
-import jetbrains.buildServer.log.Loggers
 
 class FlowdockManager {
-    private var LOG: Logger = Loggers.ACTIVITIES
-
     fun sendNotification(){
         var url = "https://api.flowdock.com/messages"
 
@@ -33,6 +30,7 @@ class FlowdockManager {
 
         FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
         var response = Fuel.post(url).body(messageBody).response()
-        this.LOG.info(response.toString())
+
+        logInfoMessage(response.toString())
     }
 }

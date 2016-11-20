@@ -1,8 +1,7 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.core
 
-import com.intellij.openapi.diagnostic.Logger
+import com.adrianfaciu.teamcity.flowdockPlugin.util.logInfoMessage
 import jetbrains.buildServer.Build
-import jetbrains.buildServer.log.Loggers
 import jetbrains.buildServer.notification.Notificator
 import jetbrains.buildServer.notification.NotificatorRegistry
 import jetbrains.buildServer.responsibility.ResponsibilityEntry
@@ -15,14 +14,14 @@ import jetbrains.buildServer.users.SUser
 import jetbrains.buildServer.vcs.VcsRoot
 
 class FlowdockNotificator : Notificator {
-    private var LOG: Logger = Loggers.ACTIVITIES
+    private val notificationManager = FlowdockManager()
 
     constructor(notificatorRegistry: NotificatorRegistry) {
         notificatorRegistry.register(this)
     }
 
     fun register(){
-
+        logInfoMessage("Initialized flowdock notificator")
     }
 
     override fun notifyBuildProblemsUnmuted(p0: MutableCollection<BuildProblemInfo>, p1: MuteInfo, p2: SUser?, p3: MutableSet<SUser>) {
@@ -110,9 +109,7 @@ class FlowdockNotificator : Notificator {
     }
 
     fun sendNotification(){
-        LOG.info("Notification handled")
-
-        var manager = FlowdockManager()
-        manager.sendNotification()
+        logInfoMessage("Notification handled")
+        this.notificationManager.sendNotification()
     }
 }
