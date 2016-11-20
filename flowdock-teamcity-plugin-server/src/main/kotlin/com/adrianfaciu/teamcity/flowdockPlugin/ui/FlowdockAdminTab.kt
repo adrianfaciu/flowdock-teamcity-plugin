@@ -1,18 +1,26 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.ui
 
+import com.adrianfaciu.teamcity.flowdockPlugin.util.logInfoMessage
 import jetbrains.buildServer.controllers.admin.AdminPage
-import jetbrains.buildServer.web.openapi.Groupable
 import jetbrains.buildServer.web.openapi.PagePlaces
 import jetbrains.buildServer.web.openapi.PluginDescriptor
-
-// This we need for general top level settings
-// Project level things can copy this
+import javax.servlet.http.HttpServletRequest
 
 class FlowdockAdminTab : AdminPage {
     constructor(pagePlaces: PagePlaces, pluginDescriptor: PluginDescriptor) : super(pagePlaces) {
-        pluginName = "Flowdock"
-        tabTitle = "Flowdock Notifier"
+        this.pluginName = "Flowdock"
+        this.tabTitle = "Flowdock Notifier"
+
+        this.includeUrl = pluginDescriptor.getPluginResourcesPath("flowdockAdminTab.jsp")
+        logInfoMessage("Include UR: ${this.includeUrl}")
+
         register()
+        logInfoMessage("Registered admin tab")
+    }
+
+    override fun fillModel(model: MutableMap<String, Any>, request: HttpServletRequest) {
+        super.fillModel(model, request)
+        model.put("token", "mycooltoken")
     }
 
     override fun getGroup(): String {

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest
 
 class FlowdockProjectTab : ProjectTab {
     constructor(pagePlaces: PagePlaces, projectManager: ProjectManager, descriptor: PluginDescriptor)
-        : super("Flowdock notification", "Flowdock notification", pagePlaces, projectManager, descriptor.getPluginResourcesPath("FlowdockNotification/flowdockProjectTab.jsp")) {
+        : super("Flowdock notification", "Flowdock notification", pagePlaces, projectManager, descriptor.getPluginResourcesPath("buildServerResources/flowdockProjectTab.jsp")) {
         // TODO
     }
 

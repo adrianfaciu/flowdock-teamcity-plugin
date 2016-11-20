@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest
 class FlowdockBuildTypeTab : BuildTypeTab {
     constructor(manager: WebControllerManager, projectManager: ProjectManager, pluginDescriptor: PluginDescriptor)
         : super("Flowdock", "Flowdock notifier", manager, projectManager) {
-        includeUrl = pluginDescriptor.getPluginResourcesPath("/FlowdockNotification/flowdockProjectTab.jsp")
+        includeUrl = pluginDescriptor.getPluginResourcesPath("/buildServerResources/flowdockProjectTab.jsp")
     }
 
     override fun fillModel(p0: MutableMap<String, Any>, p1: HttpServletRequest, p2: SBuildType, p3: SUser?) {
