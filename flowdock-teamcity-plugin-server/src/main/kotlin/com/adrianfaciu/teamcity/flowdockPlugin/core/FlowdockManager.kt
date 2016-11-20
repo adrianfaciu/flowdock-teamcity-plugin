@@ -1,7 +1,6 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.core
 
 import com.adrianfaciu.teamcity.flowdockPlugin.notifications.FlowdockNotification
-import com.adrianfaciu.teamcity.flowdockPlugin.notifications.NotificationType
 import com.adrianfaciu.teamcity.flowdockPlugin.util.SettingsManager
 import com.adrianfaciu.teamcity.flowdockPlugin.util.logInfoMessage
 import com.github.kittinunf.fuel.Fuel
@@ -22,10 +21,5 @@ class FlowdockManager {
                            .response()
 
         logInfoMessage(response.toString())
-    }
-
-    fun shouldSend(type: NotificationType): Boolean {
-        // TODO check if we want/need to send this notification
-        return true
     }
 }

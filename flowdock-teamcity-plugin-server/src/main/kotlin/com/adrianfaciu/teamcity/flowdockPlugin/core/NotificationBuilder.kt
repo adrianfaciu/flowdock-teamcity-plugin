@@ -25,6 +25,6 @@ class NotificationBuilder {
         thread.title = "Build status"
         notification.thread = thread
 
-        return notification;
+        return notification
     }
 }
