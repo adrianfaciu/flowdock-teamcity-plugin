@@ -19,4 +19,8 @@
     <bean id="flowdockBuildTab"
           class="com.adrianfaciu.teamcity.flowdockPlugin.ui.FlowdockBuildTypeTab"
           init-method="register"/>
+
+    <bean id="adminController"
+          class="com.adrianfaciu.teamcity.flowdockPlugin.ui.FlowdockAdminController"
+          init-method="register"/>
 </beans>

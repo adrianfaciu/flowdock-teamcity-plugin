@@ -21,6 +21,7 @@ class FlowdockAdminTab : AdminPage {
     override fun fillModel(model: MutableMap<String, Any>, request: HttpServletRequest) {
         super.fillModel(model, request)
         model.put("token", "mycooltoken")
+        model.put("disabled", false)
     }
 
     override fun getGroup(): String {
