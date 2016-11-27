@@ -14,10 +14,8 @@ import jetbrains.buildServer.tests.TestName
 import jetbrains.buildServer.users.SUser
 import jetbrains.buildServer.vcs.VcsRoot
 
-class FlowdockNotificator : Notificator {
-    private val notificationManager = FlowdockManager()
-
-    constructor(notificatorRegistry: NotificatorRegistry) {
+class FlowdockNotificator(val notificationManager: FlowdockManager, val builder: NotificationBuilder) : Notificator {
+    constructor(notificationManager: FlowdockManager, builder: NotificationBuilder, notificatorRegistry: NotificatorRegistry) : this(notificationManager, builder) {
         notificatorRegistry.register(this)
     }
 
@@ -113,8 +111,7 @@ class FlowdockNotificator : Notificator {
     fun handleEvent(type: NotificationType, build: SRunningBuild, users: MutableSet<SUser>){
         logInfoMessage("Notification handled")
 
-        val builder = NotificationBuilder()
-        val notification = builder.createNotification(type, build, users)
+        val notification = this.builder.createNotification(type, build, users)
         this.notificationManager.sendNotification(notification)
     }
 

@@ -8,6 +8,12 @@
           class="com.adrianfaciu.teamcity.flowdockPlugin.core.FlowdockNotificator"
           init-method="register"/>
 
+    <bean id="flowdockManager"
+          class="com.adrianfaciu.teamcity.flowdockPlugin.core.FlowdockManager"/>
+
+    <bean id="flowdockNotificationBuilder"
+          class="com.adrianfaciu.teamcity.flowdockPlugin.core.NotificationBuilder"/>
+
     <bean id="flowdockProjectTab"
           class="com.adrianfaciu.teamcity.flowdockPlugin.ui.FlowdockProjectTab"
           init-method="register"/>
@@ -23,4 +29,17 @@
     <bean id="adminController"
           class="com.adrianfaciu.teamcity.flowdockPlugin.ui.FlowdockAdminController"
           init-method="register"/>
+
+    <bean id="flodockMainConfig"
+          class="com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockMainConfig"/>
+
+    <bean id="flowdockMainSettings"
+          class="com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockMainSettings"
+          init-method="register"/>
+
+    <bean id="flowdockProjectSettings"
+          class="com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockProjectSettings"/>
+
+    <bean id="flowdockProjectSettingsFactory"
+          class="com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockProjectSettingsFactory"/>
 </beans>
