@@ -9,6 +9,8 @@ import org.springframework.web.servlet.ModelAndView
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+// Good sample here: https://github.com/wix/wix-maven-teamcity-plugin/blob/master/server/src/main/java/com/wixpress/ci/teamcity/dependenciesTab/DependenciesTabAjaxController.java
+
 class FlowdockAdminController : BaseController {
     var webManager: WebControllerManager
     var pluginPath: String?
@@ -26,11 +28,9 @@ class FlowdockAdminController : BaseController {
     override fun doHandle(request: HttpServletRequest, response: HttpServletResponse): ModelAndView? {
         logInfoMessage("Handling request")
 
-        val content = request.getParameter("cmd") //does not work, oh god why do I need to read all
-        logInfoMessage("Save: $content")
+        val token = request.getParameter("token")
+        logInfoMessage("Save: $token")
 
         return null
-
-        // Good sample here: https://github.com/wix/wix-maven-teamcity-plugin/blob/master/server/src/main/java/com/wixpress/ci/teamcity/dependenciesTab/DependenciesTabAjaxController.java
     }
 }

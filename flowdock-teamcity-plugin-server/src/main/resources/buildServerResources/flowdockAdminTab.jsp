@@ -1,7 +1,7 @@
 <%@ include file="/include.jsp"%>
 
 <div id="settingsContainer">
-    <form method="post" action="/flowdockNotifier/flowdockAdminTab.html">
+    <form method="post" action="/flowdockNotifier/flowdockAdminTab.html" id="flowdockAdminForm">
         <div class="editNotificatorSettingsPage">
 
             <c:choose>
@@ -34,11 +34,12 @@
                 </tr>
             </table>
             <div class="saveButtonsBlock">
-                    <forms:submit label="Save" />
+                    <forms:submit type="button" label="Save" onclick="return flowdockAdmin.save()"/>
                     <forms:saving />
             </div>
          </div>
     </form>
+      <bs:linkScript>
+        ${teamcityPluginResourcesPath}scripts/flowdockAdmin.js
+      </bs:linkScript>
 </div>
-
-<!-- use ${teamcityPluginResourcesPath} to get path -->
