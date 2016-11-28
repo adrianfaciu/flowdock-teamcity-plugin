@@ -4,6 +4,10 @@ import jetbrains.buildServer.log.Loggers
 
 val logger = Loggers.ACTIVITIES!!
 
-fun logInfoMessage(message: String){
+fun logInfoMessage(message: String) {
     logger.info("FlowdockNotifier: $message")
+}
+
+fun logErrorMessage(message: String) {
+    logger.error("FlowdockNotifier: $message")
 }

@@ -1,5 +1,6 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.ui
 
+import com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockMainConfig
 import com.adrianfaciu.teamcity.flowdockPlugin.util.logInfoMessage
 import jetbrains.buildServer.controllers.BaseController
 import jetbrains.buildServer.serverSide.SBuildServer
@@ -11,14 +12,10 @@ import javax.servlet.http.HttpServletResponse
 
 // Good sample here: https://github.com/wix/wix-maven-teamcity-plugin/blob/master/server/src/main/java/com/wixpress/ci/teamcity/dependenciesTab/DependenciesTabAjaxController.java
 
-class FlowdockAdminController : BaseController {
-    var webManager: WebControllerManager
-    var pluginPath: String?
-
-    constructor(server: SBuildServer, webManager: WebControllerManager, pluginDescriptor: PluginDescriptor) : super(server) {
-        this.webManager = webManager
-        this.pluginPath = pluginDescriptor.pluginResourcesPath
-    }
+class FlowdockAdminController(val server: SBuildServer,
+                              val webManager: WebControllerManager,
+                              val pluginDescriptor: PluginDescriptor,
+                              val mainConfig: FlowdockMainConfig) : BaseController() {
 
     fun register() {
         this.webManager.registerController("/flowdockNotifier/flowdockAdminTab.html", this)
@@ -30,6 +27,9 @@ class FlowdockAdminController : BaseController {
 
         val token = request.getParameter("token")
         logInfoMessage("Save: $token")
+
+        this.mainConfig.apiToken = token
+        this.mainConfig.save()
 
         return null
     }
