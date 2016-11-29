@@ -14,9 +14,8 @@ class FlowdockMainSettings(val server: SBuildServer, val serverPaths : ServerPat
     }
 
     override fun readFrom(rootElement: Element?) {
-        // Method is called readFrom!! Why would I need to save here...
-        var flowdockNode = rootElement?.getChild(this.flowdockNodeName)
-        this.mainConfig.saveFromNode(flowdockNode)
+        this.mainConfig.readFromNode(rootElement)
+        this.mainConfig.save()
     }
 
     fun register() {

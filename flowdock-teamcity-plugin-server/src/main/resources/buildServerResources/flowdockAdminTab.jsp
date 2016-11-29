@@ -43,3 +43,14 @@
         ${teamcityPluginResourcesPath}scripts/flowdockAdmin.js
       </bs:linkScript>
 </div>
+
+<script type="text/javascript">
+	(function($) {
+       $("#enable-btn").click(function() {
+            return flowdockAdmin.saveEnabled(true);
+       });
+        $("#disable-btn").click(function() {
+            return flowdockAdmin.saveEnabled(false);
+        });
+    })(jQuery);
+</script>
