@@ -7,6 +7,7 @@ var flowdockAdmin = {
           jQuery.ajax({
                         url: $("flowdockAdminForm").action,
                         data: {
+                                action: "editSettings",
                                 token: $("token").value },
                         type: "POST"
                      }).done(function() {
@@ -24,10 +25,15 @@ var flowdockAdmin = {
     },
 
     saveEnabled : function(isEnabled) {
-        // do ajax post - then ->
-        console.log('saving isEnabled');
-
-        BS.reload(true);
+         jQuery.ajax({
+                        url: $("flowdockAdminForm").action,
+                        data: {
+                                action: "changeEnabled",
+                                flag: isEnabled },
+                        type: "POST"
+                      }).done(function() {
+                         BS.reload(true);
+                      });
 
         return false;
     }

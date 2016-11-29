@@ -10,7 +10,6 @@ import org.springframework.web.servlet.ModelAndView
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-// Good sample here: https://github.com/wix/wix-maven-teamcity-plugin/blob/master/server/src/main/java/com/wixpress/ci/teamcity/dependenciesTab/DependenciesTabAjaxController.java
 
 class FlowdockAdminController(val server: SBuildServer,
                               val webManager: WebControllerManager,
@@ -25,11 +24,21 @@ class FlowdockAdminController(val server: SBuildServer,
     override fun doHandle(request: HttpServletRequest, response: HttpServletResponse): ModelAndView? {
         logInfoMessage("Handling request")
 
-        val token = request.getParameter("token")
-        logInfoMessage("Save: $token")
+        val action = request.getParameter("action") ?: return null
 
-        this.mainConfig.apiToken = token
-        this.mainConfig.save()
+        if (action == "editSettings") {
+            val token = request.getParameter("token")
+            logInfoMessage("Save: $token")
+
+            this.mainConfig.apiToken = token
+            this.mainConfig.save()
+        }
+
+        if (action == "changeEnabled") {
+            val isEnabled = request.getParameter("flag").toBoolean()
+            this.mainConfig.isEnabled = isEnabled
+            this.mainConfig.save()
+        }
 
         return null
     }
