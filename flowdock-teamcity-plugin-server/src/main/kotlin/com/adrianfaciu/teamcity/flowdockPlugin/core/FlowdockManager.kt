@@ -9,6 +9,10 @@ import com.google.gson.GsonBuilder
 
 class FlowdockManager(val flowdockConfig: FlowdockMainConfig) {
     fun sendNotification(notification: FlowdockNotification){
+        if (this.flowdockConfig.isEnabled ?: false) {
+            return
+        }
+
         val builder = GsonBuilder()
         val gson = builder.create()
         var messageBody = gson.toJson(notification)

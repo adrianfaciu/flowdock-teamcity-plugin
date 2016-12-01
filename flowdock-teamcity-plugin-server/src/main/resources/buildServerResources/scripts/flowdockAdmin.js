@@ -36,5 +36,18 @@ var flowdockAdmin = {
                       });
 
         return false;
+    },
+
+    saveProject : function() {
+         jQuery.ajax({
+                       url: $("flowdockProjectForm").action,
+                       data: {
+                                action: "saveProjectSettings",
+                                token: $("token").value,
+                                projectId: $("projectId").value},
+                        type: "POST"
+                     }).done(function() {
+                         alert("Project settings saved!");
+                     });
     }
 };

@@ -8,13 +8,14 @@ import jetbrains.buildServer.web.openapi.WebControllerManager
 import jetbrains.buildServer.web.openapi.buildType.BuildTypeTab
 import javax.servlet.http.HttpServletRequest
 
-class FlowdockBuildTypeTab : BuildTypeTab {
-    constructor(manager: WebControllerManager, projectManager: ProjectManager, pluginDescriptor: PluginDescriptor)
-        : super("Flowdock", "Flowdock notifier", manager, projectManager) {
-        includeUrl = pluginDescriptor.getPluginResourcesPath("/buildServerResources/flowdockProjectTab.jsp")
-    }
+class FlowdockBuildTypeTab(manager: WebControllerManager, projectManager: ProjectManager, pluginDescriptor: PluginDescriptor)
+    : BuildTypeTab("Flowdock", "Flowdock notifier", manager, projectManager) {
 
     override fun fillModel(p0: MutableMap<String, Any>, p1: HttpServletRequest, p2: SBuildType, p3: SUser?) {
+    }
+
+    init {
+        this.includeUrl = pluginDescriptor.getPluginResourcesPath("flowdockBuildTypeTab.jsp")
     }
 }
 
