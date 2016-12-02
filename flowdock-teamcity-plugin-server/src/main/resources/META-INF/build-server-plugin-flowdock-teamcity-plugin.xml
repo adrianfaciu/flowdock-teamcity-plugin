@@ -42,4 +42,7 @@
 
     <bean id="flowdockProjectSettingsFactory"
           class="com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockProjectSettingsFactory"/>
+
+    <bean id="flowdockSettingsRepo"
+          class="com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockSettingsRepo"/>
 </beans>

@@ -17,7 +17,7 @@ var flowdockAdmin = {
         return ;
     },
 
-    validate() : function() {
+    validate : function() {
         var valid = true;
         valid = valid || ($("token").value && $("token").value.length > 0);
 

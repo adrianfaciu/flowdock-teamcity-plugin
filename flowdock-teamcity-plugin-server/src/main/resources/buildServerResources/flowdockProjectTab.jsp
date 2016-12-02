@@ -12,7 +12,7 @@
             <table class="runnerFormTable">
                 <tr>
                       <th>
-                           <label for="token">Source token: <l:star /></label>
+                           <label for="token">Source token: <l:star/></label>
                        </th>
                        <td>
                            <forms:textField name="token" value="${token}" style="width: 300px;" />

@@ -1,6 +1,7 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.ui
 
 import com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockProjectSettings
+import com.adrianfaciu.teamcity.flowdockPlugin.util.logInfoMessage
 import jetbrains.buildServer.serverSide.ProjectManager
 import jetbrains.buildServer.serverSide.SProject
 import jetbrains.buildServer.serverSide.settings.ProjectSettingsManager
@@ -14,9 +15,11 @@ class FlowdockProjectTab(val projectSettingsManager : ProjectSettingsManager, pa
     : ProjectTab("Flowdock notification", "Flowdock notification", pagePlaces, projectManager) {
 
     override fun fillModel(model: MutableMap<String, Any>, request: HttpServletRequest, project: SProject, user: SUser?) {
+        logInfoMessage("fillModel")
+
         val settings = this.projectSettingsManager.getSettings(project.projectId, "flowdockNotifications") as FlowdockProjectSettings
 
-        super.fillModel(model, request)
+        logInfoMessage("Populating project tab model ${project.projectId} - ${settings.projectToken}")
 
         model.put("token", settings.projectToken ?: "")
         model.put("projectId", project.projectId)

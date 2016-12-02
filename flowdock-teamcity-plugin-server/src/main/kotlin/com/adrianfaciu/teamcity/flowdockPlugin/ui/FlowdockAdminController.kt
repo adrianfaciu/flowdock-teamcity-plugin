@@ -42,23 +42,29 @@ class FlowdockAdminController(val server: SBuildServer,
         }
 
         if (action == "changeEnabled") {
+            logInfoMessage("Saving enabled state")
+
             val isEnabled = request.getParameter("flag").toBoolean()
             this.mainConfig.isEnabled = isEnabled
             this.mainConfig.save()
         }
 
         if (action == "saveProjectSettings") {
-            val projId = request.getParameter("projectId")
-            val settings = this.projectSettingsManager.getSettings(projId, "flowdockNotifications") as FlowdockProjectSettings
+            logInfoMessage("Saving project settings")
+
+            val projectId = request.getParameter("projectId")
+            val settings = this.projectSettingsManager.getSettings(projectId, "flowdockNotifications") as FlowdockProjectSettings
 
             settings.projectToken = request.getParameter("token")
 
-            val project = this.projectManager.findProjectById(projId)
+            logInfoMessage("Token: ${settings.projectToken}")
+
+            val project = this.projectManager.findProjectById(projectId)
             project?.persist()
         }
 
         if (action == "saveBuildSettings") {
-
+            logInfoMessage("Saving build settings")
         }
 
         return null
