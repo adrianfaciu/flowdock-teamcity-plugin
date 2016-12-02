@@ -5,13 +5,14 @@ import com.adrianfaciu.teamcity.flowdockPlugin.notifications.NotificationAuthor
 import com.adrianfaciu.teamcity.flowdockPlugin.notifications.NotificationThread
 import com.adrianfaciu.teamcity.flowdockPlugin.notifications.NotificationType
 import com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockMainConfig
+import com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockSettingsRepo
 import jetbrains.buildServer.serverSide.SRunningBuild
 import jetbrains.buildServer.users.SUser
 
-class NotificationBuilder(val flowdockConfig: FlowdockMainConfig) {
+class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo) {
     fun createNotification(type: NotificationType, build: SRunningBuild, users: MutableSet<SUser>): FlowdockNotification {
         var notification =  FlowdockNotification()
-        notification.flow_token = this.flowdockConfig.apiToken
+        notification.flow_token = this.flowdockConfig.getToken(build.projectId)
         notification.event = "activity"
         notification.author = NotificationAuthor("Adrian","https://avatars.githubusercontent.com/u/3017123?v=3", null)
 
