@@ -14,8 +14,9 @@ import jetbrains.buildServer.tests.TestName
 import jetbrains.buildServer.users.SUser
 import jetbrains.buildServer.vcs.VcsRoot
 
-class FlowdockNotificator(val notificationManager: FlowdockManager, val builder: NotificationBuilder) : Notificator {
-    constructor(notificationManager: FlowdockManager, builder: NotificationBuilder, notificatorRegistry: NotificatorRegistry) : this(notificationManager, builder) {
+class FlowdockNotificator(val notificationManager: FlowdockManager, val builder: NotificationBuilder, val projectManager: ProjectManager) : Notificator {
+    constructor(notificationManager: FlowdockManager, builder: NotificationBuilder, notificatorRegistry: NotificatorRegistry, projectManager: ProjectManager)
+            : this(notificationManager, builder, projectManager) {
         notificatorRegistry.register(this)
     }
 
@@ -31,62 +32,62 @@ class FlowdockNotificator(val notificationManager: FlowdockManager, val builder:
         return "flowdockNotificator"
     }
 
-    override fun notifyBuildProblemsUnmuted(p0: MutableCollection<BuildProblemInfo>, p1: MuteInfo, p2: SUser?, p3: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyBuildProblemsUnmuted(buildProblems: MutableCollection<BuildProblemInfo>, muteInfo: MuteInfo, user: SUser?, users: MutableSet<SUser>) {
+        this.handleEvent(NotificationType.BuildProblemsUnmuted, buildProblems, users, muteInfo.project)
     }
 
-    override fun notifyLabelingFailed(p0: Build, p1: VcsRoot, p2: Throwable, p3: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyResponsibleChanged(tests: MutableCollection<TestName>, responisbility: ResponsibilityEntry, project: SProject, users: MutableSet<SUser>) {
+        this.handleEvent(NotificationType.ResponsibleChanged, tests, users, project)
     }
 
-    override fun notifyResponsibleChanged(p0: SBuildType, p1: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyBuildProblemResponsibleChanged(buildProblems: MutableCollection<BuildProblemInfo>, responsibility: ResponsibilityEntry, project: SProject, users: MutableSet<SUser>) {
+        this.handleEvent(NotificationType.BuildProblemResponsibleChanged, buildProblems, users, project)
     }
 
-    override fun notifyResponsibleChanged(p0: TestNameResponsibilityEntry?, p1: TestNameResponsibilityEntry, p2: SProject, p3: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyBuildProblemsMuted(buildProblems: MutableCollection<BuildProblemInfo>, muteInfo: MuteInfo, users: MutableSet<SUser>) {
+        this.handleEvent(NotificationType.BuildProblemsMuted, buildProblems, users, muteInfo.project)
     }
 
-    override fun notifyResponsibleChanged(p0: MutableCollection<TestName>, p1: ResponsibilityEntry, p2: SProject, p3: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyBuildProblemResponsibleAssigned(buildProblems: MutableCollection<BuildProblemInfo>, responisbility: ResponsibilityEntry, project: SProject, users: MutableSet<SUser>) {
+        this.handleEvent(NotificationType.BuildProblemResponsibleAssigned, buildProblems, users, project)
     }
 
-    override fun notifyBuildProblemResponsibleChanged(p0: MutableCollection<BuildProblemInfo>, p1: ResponsibilityEntry, p2: SProject, p3: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyTestsMuted(tests: MutableCollection<STest>, muteInfo: MuteInfo, users: MutableSet<SUser>) {
+        this.handleEvent(NotificationType.TestsMuted, tests, users, muteInfo.project)
     }
 
-    override fun notifyBuildProblemsMuted(p0: MutableCollection<BuildProblemInfo>, p1: MuteInfo, p2: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyTestsUnmuted(tests: MutableCollection<STest>, muteInfo: MuteInfo, user: SUser?, users: MutableSet<SUser>) {
+        this.handleEvent(NotificationType.TestsUnmuted, tests, users, muteInfo.project)
     }
 
-    override fun notifyBuildProblemResponsibleAssigned(p0: MutableCollection<BuildProblemInfo>, p1: ResponsibilityEntry, p2: SProject, p3: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyResponsibleAssigned(tests: MutableCollection<TestName>, responsibility: ResponsibilityEntry, project: SProject, users: MutableSet<SUser>) {
+        this.handleEvent(NotificationType.ResponsibleAssigned, tests, users, project)
     }
 
-    override fun notifyTestsMuted(p0: MutableCollection<STest>, p1: MuteInfo, p2: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyLabelingFailed(build: Build, vcsRoot: VcsRoot, error: Throwable, users: MutableSet<SUser>) {
+        val project = this.projectManager.projects.filter { p -> p.projectId == build.projectId }.first()
+        this.handleEvent(NotificationType.LabelingFailed, users, project)
     }
 
-    override fun notifyBuildFailedToStart(p0: SRunningBuild, p1: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyResponsibleChanged(buildType: SBuildType, users: MutableSet<SUser>) {
+        this.handleEvent(NotificationType.ResponsibleChanged, users, buildType.project)
     }
 
-    override fun notifyTestsUnmuted(p0: MutableCollection<STest>, p1: MuteInfo, p2: SUser?, p3: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyResponsibleChanged(p0: TestNameResponsibilityEntry?, p1: TestNameResponsibilityEntry, project: SProject, users: MutableSet<SUser>) {
+        this.handleEvent(NotificationType.ResponsibleChanged, users, project)
     }
 
-    override fun notifyResponsibleAssigned(p0: SBuildType, p1: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyResponsibleAssigned(buildType: SBuildType, users: MutableSet<SUser>) {
+        this.handleEvent(NotificationType.ResponsibleChanged, users, buildType.project)
     }
 
-    override fun notifyResponsibleAssigned(p0: TestNameResponsibilityEntry?, p1: TestNameResponsibilityEntry, p2: SProject, p3: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyResponsibleAssigned(p0: TestNameResponsibilityEntry?, p1: TestNameResponsibilityEntry, project: SProject, users: MutableSet<SUser>) {
+        this.handleEvent(NotificationType.ResponsibleAssigned, users, project)
     }
 
-    override fun notifyResponsibleAssigned(p0: MutableCollection<TestName>, p1: ResponsibilityEntry, p2: SProject, p3: MutableSet<SUser>) {
-        this.handleEvent()
+    override fun notifyBuildFailedToStart(build: SRunningBuild, users: MutableSet<SUser>) {
+        this.handleEvent(NotificationType.BuildFailedToStart, build, users)
     }
-
 
     override fun notifyBuildProbablyHanging(build: SRunningBuild, users: MutableSet<SUser>) {
         this.handleEvent(NotificationType.BuildHanging, build, users)
@@ -115,7 +116,17 @@ class FlowdockNotificator(val notificationManager: FlowdockManager, val builder:
         this.notificationManager.sendNotification(notification)
     }
 
-    fun handleEvent() {
-        logInfoMessage("Ignore this notiications for now")
+    fun <T> handleEvent(type: NotificationType, collection: MutableCollection<T>, users: MutableSet<SUser>, project: SProject?) {
+        logInfoMessage("Notification handled generic")
+
+        val notification = this.builder.createNotification(type, collection, users, project)
+        this.notificationManager.sendNotification(notification)
+    }
+
+    fun handleEvent(type: NotificationType, users: MutableSet<SUser>, project: SProject) {
+        logInfoMessage("Notification handled simple")
+
+        val notification = this.builder.createNotification(type, users, project)
+        this.notificationManager.sendNotification(notification)
     }
 }

@@ -5,5 +5,15 @@ enum class NotificationType {
     BuildFailing,
     BuildSuccessful,
     BuildHanging,
-    BuildStarted
+    BuildStarted,
+    BuildFailedToStart,
+    BuildProblemsUnmuted,
+    ResponsibleChanged,
+    BuildProblemResponsibleChanged,
+    BuildProblemsMuted,
+    BuildProblemResponsibleAssigned,
+    TestsMuted,
+    TestsUnmuted,
+    ResponsibleAssigned,
+    LabelingFailed
 }
