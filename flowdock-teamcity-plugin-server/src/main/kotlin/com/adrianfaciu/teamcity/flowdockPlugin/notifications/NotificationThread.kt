@@ -11,6 +11,8 @@ class NotificationThread {
 
     var fields: Array<NotificationFields>? = null
 
+    var source: NotificationSource? = null
+
     override fun toString(): String {
         return "[body = $body, title = $title, status = $status, external_url = $external_url, fields = $fields]"
     }

@@ -17,6 +17,8 @@ class FlowdockManager(val flowdockConfig: FlowdockMainConfig) {
         val gson = builder.create()
         var messageBody = gson.toJson(notification)
 
+        logInfoMessage("Notification: $messageBody")
+
         FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
         var response = Fuel.post(this.flowdockConfig.apiEndpoint)
                            .body(messageBody)

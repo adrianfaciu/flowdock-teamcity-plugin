@@ -112,7 +112,8 @@ class FlowdockNotificator(val notificationManager: FlowdockManager, val builder:
     fun handleEvent(type: NotificationType, build: SRunningBuild, users: MutableSet<SUser>){
         logInfoMessage("Notification handled")
 
-        val notification = this.builder.createNotification(type, build, users)
+        val project = this.projectManager.projects.filter { p -> p.projectId == build.projectId }.first()
+        val notification = this.builder.createNotification(type, build, users, project)
         this.notificationManager.sendNotification(notification)
     }
 
