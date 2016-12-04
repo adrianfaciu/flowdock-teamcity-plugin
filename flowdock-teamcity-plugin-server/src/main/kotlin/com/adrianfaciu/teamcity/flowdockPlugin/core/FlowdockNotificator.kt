@@ -1,7 +1,7 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.core
 
 import com.adrianfaciu.teamcity.flowdockPlugin.notifications.NotificationType
-import com.adrianfaciu.teamcity.flowdockPlugin.util.logInfoMessage
+import com.adrianfaciu.teamcity.flowdockPlugin.util.LoggerManager
 import jetbrains.buildServer.Build
 import jetbrains.buildServer.notification.Notificator
 import jetbrains.buildServer.notification.NotificatorRegistry
@@ -17,14 +17,16 @@ import jetbrains.buildServer.vcs.VcsRoot
 /**
  * Handle all server events
  */
-class FlowdockNotificator(val notificationManager: FlowdockManager, val builder: NotificationBuilder, val projectManager: ProjectManager) : Notificator {
-    constructor(notificationManager: FlowdockManager, builder: NotificationBuilder, notificatorRegistry: NotificatorRegistry, projectManager: ProjectManager)
-            : this(notificationManager, builder, projectManager) {
+class FlowdockNotificator(val notificationManager: FlowdockManager, val builder: NotificationBuilder,
+                          val projectManager: ProjectManager, val logger: LoggerManager) : Notificator {
+    constructor(notificationManager: FlowdockManager, builder: NotificationBuilder,
+                notificatorRegistry: NotificatorRegistry, projectManager: ProjectManager, logger: LoggerManager)
+            : this(notificationManager, builder, projectManager, logger) {
         notificatorRegistry.register(this)
     }
 
     fun register(){
-        logInfoMessage("Initialized flowdock notificator")
+        logger.logInfoMessage("Initialized flowdock notificator")
     }
 
     override fun getDisplayName(): String {
@@ -113,7 +115,7 @@ class FlowdockNotificator(val notificationManager: FlowdockManager, val builder:
     }
 
     fun handleEvent(type: NotificationType, build: SRunningBuild, users: MutableSet<SUser>){
-        logInfoMessage("Notification handled")
+        logger.logInfoMessage("Notification handled")
 
         val project = this.projectManager.projects.filter { p -> p.projectId == build.projectId }.first()
         val notification = this.builder.createNotification(type, build, users, project)
@@ -121,14 +123,14 @@ class FlowdockNotificator(val notificationManager: FlowdockManager, val builder:
     }
 
     fun <T> handleEvent(type: NotificationType, collection: MutableCollection<T>, users: MutableSet<SUser>, project: SProject?) {
-        logInfoMessage("Notification handled generic")
+        logger.logInfoMessage("Notification handled generic")
 
         val notification = this.builder.createNotification(type, collection, users, project)
         this.notificationManager.sendNotification(notification)
     }
 
     fun handleEvent(type: NotificationType, users: MutableSet<SUser>, project: SProject) {
-        logInfoMessage("Notification handled simple")
+        logger.logInfoMessage("Notification handled simple")
 
         val notification = this.builder.createNotification(type, users, project)
         this.notificationManager.sendNotification(notification)

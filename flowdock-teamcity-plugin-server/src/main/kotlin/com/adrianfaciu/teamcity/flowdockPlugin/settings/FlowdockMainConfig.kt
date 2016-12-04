@@ -1,7 +1,6 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.settings
 
-import com.adrianfaciu.teamcity.flowdockPlugin.util.logErrorMessage
-import com.adrianfaciu.teamcity.flowdockPlugin.util.logInfoMessage
+import com.adrianfaciu.teamcity.flowdockPlugin.util.LoggerManager
 import com.intellij.openapi.util.JDOMUtil
 import jetbrains.buildServer.configuration.ChangeListener
 import jetbrains.buildServer.util.FileUtil
@@ -11,7 +10,7 @@ import org.jdom.Document
 import org.jdom.Element
 import java.io.File
 
-class FlowdockMainConfig(val serverPaths: ServerPaths) : ChangeListener {
+class FlowdockMainConfig(val serverPaths: ServerPaths, val logger: LoggerManager) : ChangeListener {
     var apiToken: String? = ""
     var isEnabled: Boolean? = true
 
@@ -26,7 +25,7 @@ class FlowdockMainConfig(val serverPaths: ServerPaths) : ChangeListener {
     }
 
     fun reloadConfiguration() {
-        logInfoMessage("Configuration load: ${this.configFile.absolutePath}")
+        logger.logInfoMessage("Configuration load: ${this.configFile.absolutePath}")
 
         this.checkAndCreateConfigFile()
         val rootNode = this.loadXmlFile(this.configFile)
@@ -34,11 +33,11 @@ class FlowdockMainConfig(val serverPaths: ServerPaths) : ChangeListener {
     }
 
     fun save(){
-        logInfoMessage("Configuration save")
+        logger.logInfoMessage("Configuration save")
 
         FileUtil.processXmlFile(this.configFile, Processor {
             rootElement ->
-                logInfoMessage("Processor parsing file: ${this.isEnabled.toString()} - ${this.apiToken}")
+                logger.logInfoMessage("Processor parsing file: ${this.isEnabled.toString()} - ${this.apiToken}")
                 rootElement.setAttribute(ENABLED, this.isEnabled.toString())
                 rootElement.setAttribute(TOKEN, this.apiToken)
         })
@@ -60,7 +59,7 @@ class FlowdockMainConfig(val serverPaths: ServerPaths) : ChangeListener {
                 return JDOMUtil.loadDocument(configFile)
         }
         catch (error: Exception) {
-            logErrorMessage("Failed to load config file: ${error.message}")
+            logger.logErrorMessage("Failed to load config file: ${error.message}")
         }
         return null
     }

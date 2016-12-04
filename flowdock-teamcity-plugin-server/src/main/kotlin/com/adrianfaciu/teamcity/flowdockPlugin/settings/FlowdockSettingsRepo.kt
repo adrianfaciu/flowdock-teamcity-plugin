@@ -1,6 +1,6 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.settings
 
-import com.adrianfaciu.teamcity.flowdockPlugin.util.logInfoMessage
+import com.adrianfaciu.teamcity.flowdockPlugin.util.LoggerManager
 import jetbrains.buildServer.serverSide.settings.ProjectSettingsManager
 
 /**
@@ -8,7 +8,7 @@ import jetbrains.buildServer.serverSide.settings.ProjectSettingsManager
  * This helps retrieving the one that we need, or the one that exists
  * Should act as proxy for reading and using the settings
  */
-class FlowdockSettingsRepo(val mainSettings: FlowdockMainConfig, val projectSettingsManager : ProjectSettingsManager) {
+class FlowdockSettingsRepo(val mainSettings: FlowdockMainConfig, val projectSettingsManager : ProjectSettingsManager, val logger: LoggerManager) {
     fun getToken(projectId: String? = null): String? {
         var token = mainSettings.apiToken
         if (!projectId.isNullOrBlank()) {
@@ -18,18 +18,22 @@ class FlowdockSettingsRepo(val mainSettings: FlowdockMainConfig, val projectSett
             }
         }
 
-        logInfoMessage("Token: $token")
+        logger.logInfoMessage("Token: $token")
         return token
     }
 
     fun getEnabledState(): Boolean {
         val state = this.mainSettings.isEnabled ?: true
-        logInfoMessage("State: $state")
+        logger.logInfoMessage("State: $state")
 
         return state
     }
 
     fun getApiEndpoint(): String {
         return "https://api.flowdock.com/messages"
+    }
+
+    fun isLogInfoEnabled(): Boolean {
+        return true
     }
 }

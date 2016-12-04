@@ -2,7 +2,7 @@ package com.adrianfaciu.teamcity.flowdockPlugin.core
 
 import com.adrianfaciu.teamcity.flowdockPlugin.notifications.*
 import com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockSettingsRepo
-import com.adrianfaciu.teamcity.flowdockPlugin.util.logInfoMessage
+import com.adrianfaciu.teamcity.flowdockPlugin.util.LoggerManager
 import jetbrains.buildServer.serverSide.SProject
 import jetbrains.buildServer.serverSide.SBuildServer
 import jetbrains.buildServer.serverSide.SRunningBuild
@@ -13,7 +13,7 @@ import java.security.MessageDigest
 /**
  * Class used to create notifications from server events
  */
-class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer: SBuildServer) {
+class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer: SBuildServer, val logger: LoggerManager) {
     val EVENT_TYPE = "activity"
 
     fun createNotification(type: NotificationType, build: SRunningBuild, users: MutableSet<SUser>, project: SProject): FlowdockNotification {
@@ -33,7 +33,7 @@ class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer
      * Based on the event we can add different information to it
      */
     private fun getBasicNotification(type: NotificationType, project: SProject?, users: MutableSet<SUser>): FlowdockNotification {
-        logInfoMessage("Creating basic notification")
+        logger.logInfoMessage("Creating basic notification")
 
         val notificationDetails = this.getNotificationDetails(type)
 
@@ -58,7 +58,7 @@ class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer
      *  - changing the thread_id / external_thread_id will change the target thread
      */
     private fun getNotificationThread(details: NotificationDetails?, project: SProject?, users: MutableSet<SUser>): NotificationThread {
-        logInfoMessage("Creating notification thread")
+        logger.logInfoMessage("Creating notification thread")
 
         var thread = NotificationThread()
         thread.title = "Build status"
@@ -77,11 +77,11 @@ class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer
      */
     private fun getNotificationDetails(type: NotificationType): NotificationDetails? {
         try {
-            logInfoMessage("Reading notification details")
+            logger.logInfoMessage("Reading notification details")
             return NotificationType::class.java.getField(type.toString()).annotations.first() as NotificationDetails
         }
         catch(error: Exception) {
-            logInfoMessage("Failed to get annotation")
+            logger.logErrorMessage("Failed to get annotation")
             return null
         }
     }

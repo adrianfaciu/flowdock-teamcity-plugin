@@ -2,7 +2,7 @@ package com.adrianfaciu.teamcity.flowdockPlugin.ui
 
 import com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockMainConfig
 import com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockProjectSettings
-import com.adrianfaciu.teamcity.flowdockPlugin.util.logInfoMessage
+import com.adrianfaciu.teamcity.flowdockPlugin.util.LoggerManager
 import jetbrains.buildServer.controllers.BaseController
 import jetbrains.buildServer.serverSide.ProjectManager
 import jetbrains.buildServer.serverSide.SBuildServer
@@ -17,29 +17,30 @@ class FlowdockController(val server: SBuildServer,
                          val webManager: WebControllerManager,
                          val pluginDescriptor: PluginDescriptor,
                          val projectManager: ProjectManager,
+                         val pluginLogger: LoggerManager,
                          val projectSettingsManager : ProjectSettingsManager,
                          val mainConfig: FlowdockMainConfig) : BaseController() {
 
     fun register() {
         this.webManager.registerController("/flowdockNotifier/flowdockController.html", this)
-        logInfoMessage("Registering admin controller")
+        pluginLogger.logInfoMessage("Registering admin controller")
     }
 
     override fun doHandle(request: HttpServletRequest, response: HttpServletResponse): ModelAndView? {
-        logInfoMessage("Handling request")
+        pluginLogger.logInfoMessage("Handling request")
 
         val action = request.getParameter("action") ?: return null
 
         if (action == "editSettings") {
             val token = request.getParameter("token")
-            logInfoMessage("Save: $token")
+            pluginLogger.logInfoMessage("Save: $token")
 
             this.mainConfig.apiToken = token
             this.mainConfig.save()
         }
 
         if (action == "changeEnabled") {
-            logInfoMessage("Saving enabled state")
+            pluginLogger.logInfoMessage("Saving enabled state")
 
             val isEnabled = request.getParameter("flag").toBoolean()
             this.mainConfig.isEnabled = isEnabled
@@ -47,21 +48,21 @@ class FlowdockController(val server: SBuildServer,
         }
 
         if (action == "saveProjectSettings") {
-            logInfoMessage("Saving project settings")
+            pluginLogger.logInfoMessage("Saving project settings")
 
             val projectId = request.getParameter("projectId")
             val settings = this.projectSettingsManager.getSettings(projectId, "flowdockNotifications") as FlowdockProjectSettings
 
             settings.projectToken = request.getParameter("token")
 
-            logInfoMessage("Token: ${settings.projectToken}")
+            pluginLogger.logInfoMessage("Token: ${settings.projectToken}")
 
             val project = this.projectManager.findProjectById(projectId)
             project?.persist()
         }
 
         if (action == "saveBuildSettings") {
-            logInfoMessage("Saving build settings")
+            pluginLogger.logInfoMessage("Saving build settings")
         }
 
         return null

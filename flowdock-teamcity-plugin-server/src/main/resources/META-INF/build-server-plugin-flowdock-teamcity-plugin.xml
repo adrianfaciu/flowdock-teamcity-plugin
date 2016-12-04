@@ -42,4 +42,7 @@
 
     <bean id="flowdockSettingsRepo"
           class="com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockSettingsRepo"/>
+
+    <bean id="logManager"
+          class="com.adrianfaciu.teamcity.flowdockPlugin.util.LoggerManager"/>
 </beans>
