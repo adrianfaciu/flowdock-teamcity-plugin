@@ -1,7 +1,9 @@
+
+
 var flowdockAdmin = {
     save: function () {
         if (!flowdockAdmin.validate()) {
-            alert("Cannot save. Invalid values!");
+            showFlowdockDialog("Cannot save. Invalid values!");
             return false;
         }
         jQuery.ajax({
@@ -12,7 +14,7 @@ var flowdockAdmin = {
             },
             type: "POST"
         }).done(function () {
-            alert("Settings saved!");
+            showFlowdockDialog("Settings saved!");
         });
 
         return;
@@ -50,7 +52,7 @@ var flowdockAdmin = {
             },
             type: "POST"
         }).done(function () {
-            alert("Project settings saved!");
+            showFlowdockDialog("Project settings saved!");
         });
     }
 };

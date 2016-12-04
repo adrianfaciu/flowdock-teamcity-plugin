@@ -1,5 +1,15 @@
 <%@ include file="/include.jsp"%>
 
+    <bs:linkCSS>
+        ${teamcityPluginResourcesPath}lib/jquery-ui.min.css
+    </bs:linkCSS>
+    <bs:linkScript>
+        ${teamcityPluginResourcesPath}lib/jquery-ui.min.js
+    </bs:linkScript>
+    <bs:linkScript>
+        ${teamcityPluginResourcesPath}scripts/dialogManager.js
+    </bs:linkScript>
+
     <div id="settingsContainer">
         <form method="post" action="/flowdockNotifier/flowdockController.html" id="flowdockAdminForm">
             <div class="editNotificatorSettingsPage">
@@ -39,6 +49,9 @@
                 </div>
             </div>
         </form>
+        <div id="fl-dialog" title="Flowdock plugin">
+            <p>Paste message here</p>
+        </div>
         <bs:linkScript>
             ${teamcityPluginResourcesPath}scripts/flowdockAdmin.js
         </bs:linkScript>
