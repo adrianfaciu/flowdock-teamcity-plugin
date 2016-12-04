@@ -1,15 +1,16 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.core
 
 import com.adrianfaciu.teamcity.flowdockPlugin.notifications.FlowdockNotification
-import com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockMainConfig
+import com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockSettingsRepo
 import com.adrianfaciu.teamcity.flowdockPlugin.util.logInfoMessage
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import com.google.gson.GsonBuilder
 
-class FlowdockManager(val flowdockConfig: FlowdockMainConfig) {
+class FlowdockManager(val settings: FlowdockSettingsRepo) {
     fun sendNotification(notification: FlowdockNotification){
-        if (this.flowdockConfig.isEnabled ?: false) {
+        if (!settings.getEnabledState()) {
+            logInfoMessage("Notifier is disabled, don't send notifications")
             return
         }
 
@@ -20,7 +21,7 @@ class FlowdockManager(val flowdockConfig: FlowdockMainConfig) {
         logInfoMessage("Notification: $messageBody")
 
         FuelManager.instance.baseHeaders = mapOf("Content-Type" to "application/json")
-        var response = Fuel.post(this.flowdockConfig.apiEndpoint)
+        var response = Fuel.post(settings.getApiEndpoint())
                            .body(messageBody)
                            .response()
 

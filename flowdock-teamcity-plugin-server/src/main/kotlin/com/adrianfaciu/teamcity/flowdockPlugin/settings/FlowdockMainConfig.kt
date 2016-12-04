@@ -12,8 +12,7 @@ import org.jdom.Element
 import java.io.File
 
 class FlowdockMainConfig(val serverPaths: ServerPaths) : ChangeListener {
-    var apiToken: String? = "" // "e9ce795411351be641ad845a4b910289"
-    var apiEndpoint: String = "https://api.flowdock.com/messages"
+    var apiToken: String? = ""
     var isEnabled: Boolean? = true
 
     private val ENABLED = "enabled"
@@ -51,7 +50,6 @@ class FlowdockMainConfig(val serverPaths: ServerPaths) : ChangeListener {
     }
 
     fun readFromNode(flowdockNode: Element?) {
-        // Do not change existing if null ?!
         this.isEnabled = flowdockNode?.getAttribute(ENABLED)?.booleanValue ?: true
         this.apiToken = flowdockNode?.getAttribute(TOKEN)?.value ?: ""
     }

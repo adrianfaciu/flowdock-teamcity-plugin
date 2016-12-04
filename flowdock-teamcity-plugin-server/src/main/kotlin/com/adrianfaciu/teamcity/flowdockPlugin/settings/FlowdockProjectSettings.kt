@@ -16,7 +16,7 @@ class FlowdockProjectSettings() : ProjectSettings {
 
     override fun readFrom(rootElement: Element?) {
         logInfoMessage("Reading project settings from file")
-        this.projectToken = rootElement?.getAttribute(PROJECT_TOKEN).toString()
+        this.projectToken = rootElement?.getAttribute(PROJECT_TOKEN)?.value
     }
 
     override fun dispose() {

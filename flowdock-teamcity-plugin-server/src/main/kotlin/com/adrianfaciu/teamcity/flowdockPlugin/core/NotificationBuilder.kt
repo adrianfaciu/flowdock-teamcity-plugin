@@ -26,11 +26,12 @@ class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer
     }
 
     private fun getBasicNotification(type: NotificationType, project: SProject?, users: MutableSet<SUser>): FlowdockNotification {
-        val user = users.first()
+        logInfoMessage("Creating basic notification")
 
-        var notification =  FlowdockNotification()
+        val notification =  FlowdockNotification()
         notification.flow_token = this.flowdockConfig.getToken(project?.projectId)
         notification.event = EVENT_TYPE
+        val user = users.first()
         notification.author = NotificationAuthor(user.name, this.getUserGravatar(user.email), user.email)
 
         notification.title = "<a href=\"${this.getTeamCityUrl(project?.projectId)}\"> TeamCity - ${project?.name} event</a>"
@@ -48,6 +49,8 @@ class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer
      *  - changing the thread_id / external_thread_id will change the target thread
      */
     private fun getNotificationThread(type: NotificationType, project: SProject?, users: MutableSet<SUser>): NotificationThread {
+        logInfoMessage("Creating notification thread")
+
         var thread = NotificationThread()
         thread.title = type.toString()
 
@@ -58,15 +61,19 @@ class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer
             thread.status = NotificationStatus(status.color, status.text)
         }
 
-        // title, body, external_url.. same as notification
+        // Title, body, external_url.. same as notification
         // ACTIONS & FIELDS
 
         return thread
     }
 
+    /**
+     * Read annotation from notification type enum
+     */
     private fun getNotificationDetails(type: NotificationType): NotificationDetails? {
         try {
-           return NotificationType::class.members.filter { m -> m.name == type.toString() }.first().annotations.first() as NotificationDetails
+            logInfoMessage("Reading notification details")
+            return NotificationType::class.java.getField(type.toString()).annotations.first() as NotificationDetails
         }
         catch(error: Exception) {
             logInfoMessage("Failed to get annotation")
