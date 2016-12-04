@@ -28,17 +28,19 @@ class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer
     private fun getBasicNotification(type: NotificationType, project: SProject?, users: MutableSet<SUser>): FlowdockNotification {
         logInfoMessage("Creating basic notification")
 
+        val notificationDetails = this.getNotificationDetails(type)
+
         val notification =  FlowdockNotification()
         notification.flow_token = this.flowdockConfig.getToken(project?.projectId)
         notification.event = EVENT_TYPE
         val user = users.first()
         notification.author = NotificationAuthor(user.name, this.getUserGravatar(user.email), user.email)
 
-        notification.title = "<a href=\"${this.getTeamCityUrl(project?.projectId)}\"> TeamCity - ${project?.name} event</a>"
-        notification.body = this.getDefaultNotificationMessage(type)
-        notification.external_thread_id= "TC-${project?.name}"
+        notification.title = "<a href=\"${this.getTeamCityUrl(project?.projectId)}\"> TeamCity - ${project?.name}</a>"
+        notification.body = this.getDefaultNotificationMessage(notificationDetails)
+        notification.external_thread_id= "TC-${project?.projectId}"
 
-        notification.thread = this.getNotificationThread(type, project, users)
+        notification.thread = this.getNotificationThread(notificationDetails, project, users)
 
         return notification
     }
@@ -48,17 +50,16 @@ class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer
      *  - the thread object represents a new state for the existing thread
      *  - changing the thread_id / external_thread_id will change the target thread
      */
-    private fun getNotificationThread(type: NotificationType, project: SProject?, users: MutableSet<SUser>): NotificationThread {
+    private fun getNotificationThread(details: NotificationDetails?, project: SProject?, users: MutableSet<SUser>): NotificationThread {
         logInfoMessage("Creating notification thread")
 
         var thread = NotificationThread()
-        thread.title = type.toString()
+        thread.title = "Build status" //details?.text
 
         thread.source = NotificationSource(100, "https://d3nmt5vlzunoa1.cloudfront.net/teamcity/files/2015/12/icon_TeamCity.png", "TeamCity")
 
-        val status = this.getNotificationDetails(type)
-        if (status != null) {
-            thread.status = NotificationStatus(status.color, status.text)
+        if (details != null) {
+            thread.status = NotificationStatus(details.color, details.text)
         }
 
         // Title, body, external_url.. same as notification
@@ -82,10 +83,11 @@ class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer
     }
 
     /**
-     * html allowed - what to put here ? - custom message from TC ?
+     * Creating notification body (html allowed)
+     * Should let user create a custom message...
      */
-    private fun getDefaultNotificationMessage(type: NotificationType): String {
-        return "Build status: $type"
+    private fun getDefaultNotificationMessage(details: NotificationDetails?): String {
+        return "Build event: ${details?.text}"
     }
 
     /**
