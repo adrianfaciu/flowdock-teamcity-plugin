@@ -30,11 +30,27 @@
         <id>JetBrains</id>
         <url>http://repository.jetbrains.com/all</url>
     </repository>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-kittinunf-maven</id>
+            <name>bintray</name>
+            <url>http://dl.bintray.com/kittinunf/maven</url>
+        </repository>
   </repositories>
   <pluginRepositories>
       <pluginRepository>
           <id>JetBrains</id>
           <url>http://repository.jetbrains.com/all</url>
+      </pluginRepository>
+      <pluginRepository>
+          <snapshots>
+              <enabled>false</enabled>
+          </snapshots>
+          <id>bintray-kittinunf-maven</id>
+          <name>bintray-plugins</name>
+          <url>http://dl.bintray.com/kittinunf/maven</url>
       </pluginRepository>
   </pluginRepositories>
   <build>
