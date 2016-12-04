@@ -3,7 +3,7 @@
   <info>
     <name>flowdock-teamcity-plugin</name>
     <display-name>Flowdock custom notifier</display-name>
-    <version>@Version@</version>
+    <version>1.0.0</version>
     <description>Sends messages to Flowdock on build events</description>
     <download-url>https://github.com/adrianfaciu/flowdock-teamcity-plugin</download-url>
     <email>adrian.faciu@gmail.com</email>
