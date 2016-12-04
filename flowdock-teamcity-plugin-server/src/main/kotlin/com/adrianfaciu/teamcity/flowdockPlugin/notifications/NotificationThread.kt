@@ -1,5 +1,8 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.notifications
 
+/**
+ * Threads represent entities in external services
+ */
 class NotificationThread {
     var body: String? = null
 

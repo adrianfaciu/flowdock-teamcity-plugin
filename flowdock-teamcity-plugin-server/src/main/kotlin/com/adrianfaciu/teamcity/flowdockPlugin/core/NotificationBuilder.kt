@@ -10,6 +10,9 @@ import jetbrains.buildServer.users.SUser
 import java.nio.charset.Charset
 import java.security.MessageDigest
 
+/**
+ * Class used to create notifications from server events
+ */
 class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer: SBuildServer) {
     val EVENT_TYPE = "activity"
 
@@ -25,6 +28,10 @@ class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer
         return this.getBasicNotification(type, project, users)
     }
 
+    /**
+     * Creates a basic notification object
+     * Based on the event we can add different information to it
+     */
     private fun getBasicNotification(type: NotificationType, project: SProject?, users: MutableSet<SUser>): FlowdockNotification {
         logInfoMessage("Creating basic notification")
 
@@ -54,16 +61,13 @@ class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer
         logInfoMessage("Creating notification thread")
 
         var thread = NotificationThread()
-        thread.title = "Build status" //details?.text
+        thread.title = "Build status"
 
         thread.source = NotificationSource(100, "https://d3nmt5vlzunoa1.cloudfront.net/teamcity/files/2015/12/icon_TeamCity.png", "TeamCity")
 
         if (details != null) {
             thread.status = NotificationStatus(details.color, details.text)
         }
-
-        // Title, body, external_url.. same as notification
-        // ACTIONS & FIELDS
 
         return thread
     }

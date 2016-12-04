@@ -14,6 +14,9 @@ import jetbrains.buildServer.tests.TestName
 import jetbrains.buildServer.users.SUser
 import jetbrains.buildServer.vcs.VcsRoot
 
+/**
+ * Handle all server events
+ */
 class FlowdockNotificator(val notificationManager: FlowdockManager, val builder: NotificationBuilder, val projectManager: ProjectManager) : Notificator {
     constructor(notificationManager: FlowdockManager, builder: NotificationBuilder, notificatorRegistry: NotificatorRegistry, projectManager: ProjectManager)
             : this(notificationManager, builder, projectManager) {

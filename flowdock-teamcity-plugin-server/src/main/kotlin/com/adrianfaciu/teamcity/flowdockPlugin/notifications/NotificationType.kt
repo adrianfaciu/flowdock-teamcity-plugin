@@ -1,5 +1,9 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.notifications
 
+/**
+ * Types of notifications annotated with additional details (text and color)
+ * Mapped to the type of events emitted by the server
+ */
 enum class NotificationType {
     @NotificationDetails("Build failed", "red")
     BuildFailed,

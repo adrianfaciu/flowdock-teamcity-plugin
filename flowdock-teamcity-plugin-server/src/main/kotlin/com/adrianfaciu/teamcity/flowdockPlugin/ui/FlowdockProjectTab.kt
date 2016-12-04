@@ -11,8 +11,11 @@ import jetbrains.buildServer.web.openapi.PluginDescriptor
 import jetbrains.buildServer.web.openapi.project.ProjectTab
 import javax.servlet.http.HttpServletRequest
 
+/**
+ * Custom UI for project
+ */
 class FlowdockProjectTab(val projectSettingsManager : ProjectSettingsManager, pagePlaces: PagePlaces, projectManager: ProjectManager, descriptor: PluginDescriptor)
-    : ProjectTab("Flowdock notification", "Flowdock notification", pagePlaces, projectManager) {
+    : ProjectTab("Flowdock", "Flowdock Notifier", pagePlaces, projectManager) {
 
     override fun fillModel(model: MutableMap<String, Any>, request: HttpServletRequest, project: SProject, user: SUser?) {
         logInfoMessage("fillModel")

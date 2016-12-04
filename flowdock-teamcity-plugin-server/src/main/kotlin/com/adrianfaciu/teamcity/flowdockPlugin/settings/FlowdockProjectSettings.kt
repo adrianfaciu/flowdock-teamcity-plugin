@@ -4,7 +4,10 @@ import com.adrianfaciu.teamcity.flowdockPlugin.util.logInfoMessage
 import jetbrains.buildServer.serverSide.settings.ProjectSettings
 import org.jdom.Element
 
-class FlowdockProjectSettings() : ProjectSettings {
+/**
+ * Settings handler for project level
+ */
+class FlowdockProjectSettings(val projectId: String?) : ProjectSettings {
     private val PROJECT_TOKEN = "projectToken"
 
     var projectToken: String? = ""

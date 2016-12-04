@@ -13,18 +13,15 @@ import org.springframework.web.servlet.ModelAndView
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-
-//todo change name to generic controller
-
-class FlowdockAdminController(val server: SBuildServer,
-                              val webManager: WebControllerManager,
-                              val pluginDescriptor: PluginDescriptor,
-                              val projectManager: ProjectManager,
-                              val projectSettingsManager : ProjectSettingsManager,
-                              val mainConfig: FlowdockMainConfig) : BaseController() {
+class FlowdockController(val server: SBuildServer,
+                         val webManager: WebControllerManager,
+                         val pluginDescriptor: PluginDescriptor,
+                         val projectManager: ProjectManager,
+                         val projectSettingsManager : ProjectSettingsManager,
+                         val mainConfig: FlowdockMainConfig) : BaseController() {
 
     fun register() {
-        this.webManager.registerController("/flowdockNotifier/flowdockAdminTab.html", this)
+        this.webManager.registerController("/flowdockNotifier/flowdockController.html", this)
         logInfoMessage("Registering admin controller")
     }
 

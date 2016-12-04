@@ -8,8 +8,11 @@ import jetbrains.buildServer.web.openapi.WebControllerManager
 import jetbrains.buildServer.web.openapi.buildType.BuildTypeTab
 import javax.servlet.http.HttpServletRequest
 
+/**
+ * Custom UI for build
+ */
 class FlowdockBuildTypeTab(manager: WebControllerManager, projectManager: ProjectManager, pluginDescriptor: PluginDescriptor)
-    : BuildTypeTab("Flowdock", "Flowdock notifier", manager, projectManager) {
+    : BuildTypeTab("Flowdock", "Flowdock Notifier", manager, projectManager) {
 
     override fun fillModel(p0: MutableMap<String, Any>, p1: HttpServletRequest, p2: SBuildType, p3: SUser?) {
     }

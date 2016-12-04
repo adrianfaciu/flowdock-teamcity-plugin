@@ -5,6 +5,9 @@ import jetbrains.buildServer.serverSide.SBuildServer
 import jetbrains.buildServer.serverSide.ServerPaths
 import org.jdom.Element
 
+/**
+ * Settings handler for admin level
+ */
 class FlowdockMainSettings(val server: SBuildServer, val serverPaths : ServerPaths, val mainConfig: FlowdockMainConfig) : MainConfigProcessor {
     val flowdockNodeName = "flowdockNotifications"
 

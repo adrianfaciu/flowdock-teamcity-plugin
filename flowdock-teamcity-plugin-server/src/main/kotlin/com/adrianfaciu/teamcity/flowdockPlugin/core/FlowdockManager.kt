@@ -7,6 +7,9 @@ import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import com.google.gson.GsonBuilder
 
+/**
+ * Sending notifications to FlowDock using the REST API
+ */
 class FlowdockManager(val settings: FlowdockSettingsRepo) {
     fun sendNotification(notification: FlowdockNotification){
         if (!settings.getEnabledState()) {
@@ -15,8 +18,8 @@ class FlowdockManager(val settings: FlowdockSettingsRepo) {
         }
 
         val builder = GsonBuilder()
-        val gson = builder.create()
-        var messageBody = gson.toJson(notification)
+        val serializer = builder.create()
+        var messageBody = serializer.toJson(notification)
 
         logInfoMessage("Notification: $messageBody")
 

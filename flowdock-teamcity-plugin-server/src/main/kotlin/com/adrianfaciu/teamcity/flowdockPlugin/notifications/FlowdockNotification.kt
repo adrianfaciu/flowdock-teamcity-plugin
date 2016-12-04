@@ -1,5 +1,8 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.notifications
 
+/**
+ * Notification object that will be serialized and sent to Flowdock
+ */
 class FlowdockNotification {
     var author: NotificationAuthor? = null
 

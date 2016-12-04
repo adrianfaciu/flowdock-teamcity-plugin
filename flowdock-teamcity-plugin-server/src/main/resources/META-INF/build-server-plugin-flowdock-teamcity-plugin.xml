@@ -27,7 +27,7 @@
           init-method="register"/>
 
     <bean id="adminController"
-          class="com.adrianfaciu.teamcity.flowdockPlugin.ui.FlowdockAdminController"
+          class="com.adrianfaciu.teamcity.flowdockPlugin.ui.FlowdockController"
           init-method="register"/>
 
     <bean id="flodockMainConfig"
@@ -36,9 +36,6 @@
     <bean id="flowdockMainSettings"
           class="com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockMainSettings"
           init-method="register"/>
-
-    <bean id="flowdockProjectSettings"
-          class="com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockProjectSettings"/>
 
     <bean id="flowdockProjectSettingsFactory"
           class="com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockProjectSettingsFactory"/>

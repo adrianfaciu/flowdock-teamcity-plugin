@@ -7,6 +7,9 @@ import jetbrains.buildServer.web.openapi.PagePlaces
 import jetbrains.buildServer.web.openapi.PluginDescriptor
 import javax.servlet.http.HttpServletRequest
 
+/**
+ * Custom UI for admin
+ */
 class FlowdockAdminTab(val mainConfig: FlowdockMainConfig, pagePlaces: PagePlaces) : AdminPage(pagePlaces) {
     constructor(pagePlaces: PagePlaces, pluginDescriptor: PluginDescriptor, mainConfig: FlowdockMainConfig) : this(mainConfig, pagePlaces) {
         this.pluginName = "Flowdock"
