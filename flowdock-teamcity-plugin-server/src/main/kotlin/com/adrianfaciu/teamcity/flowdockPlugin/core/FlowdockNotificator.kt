@@ -29,7 +29,7 @@ class FlowdockNotificator(val notificationManager: FlowdockManager, val builder:
     }
 
     override fun getDisplayName(): String {
-        return "Flowdock notificator"
+        return "Flowdock Notifier"
     }
 
     override fun getNotificatorType(): String {

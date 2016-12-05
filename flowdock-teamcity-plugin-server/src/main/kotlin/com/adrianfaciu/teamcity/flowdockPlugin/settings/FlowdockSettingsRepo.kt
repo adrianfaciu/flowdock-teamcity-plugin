@@ -20,7 +20,7 @@ class FlowdockSettingsRepo(val mainSettings: FlowdockMainConfig, val projectSett
         if (!projectId.isNullOrBlank()) {
             val settings = this.projectSettingsManager.getSettings(projectId, "flowdockNotifications") as FlowdockProjectSettings
             if (!settings.projectToken.isNullOrBlank()) {
-                token = settings.projectToken;
+                token = settings.projectToken
             }
         }
 
