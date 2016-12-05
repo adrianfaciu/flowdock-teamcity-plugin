@@ -58,6 +58,9 @@
                 </div>
             </div>
         </form>
+        <div>
+            <p>For instructions on how to use the plugin <a href="https://github.com/adrianfaciu/flowdock-teamcity-plugin/blob/master/HOWTO.md">check here.</a></p>
+        </div>
         <div id="fl-dialog" title="Flowdock plugin">
             <p>Paste message here</p>
         </div>
