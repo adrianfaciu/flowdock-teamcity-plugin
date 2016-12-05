@@ -22,6 +22,7 @@ To install the plugin, put zip archive to 'plugins' dir under TeamCity data dire
 * custom actions for threads (create issue in bug tracker if broken build, open drop folder, open web app etc.)
 * view test results in notification
 * custom user image (instead or if no Gravatar)
+* more options to customize behaviour
 
 Big thanks to [tcSlackBuildNotifier](https://github.com/PeteGoo/tcSlackBuildNotifier) which was quite useful for finding out how TeamCity and a custom notifier work :)
 

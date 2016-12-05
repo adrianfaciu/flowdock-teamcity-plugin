@@ -44,7 +44,7 @@ class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer
         notification.author = NotificationAuthor(user.name, this.getUserGravatar(user.email), user.email)
 
         notification.title = "<a href=\"${this.getTeamCityUrl(project?.projectId)}\"> TeamCity - ${project?.name}</a>"
-        notification.body = this.getDefaultNotificationMessage(notificationDetails)
+        notification.body = this.getDefaultNotificationMessage(type, notificationDetails, build)
         notification.external_thread_id= "TC-${project?.projectId}"
         if (build != null) {
             notification.external_thread_id += "- ${build.fullName}"
@@ -96,8 +96,19 @@ class NotificationBuilder(val flowdockConfig: FlowdockSettingsRepo, val tcServer
      * Creating notification body (html allowed)
      * Should let user create a custom message...
      */
-    private fun getDefaultNotificationMessage(details: NotificationDetails?): String {
-        return "${details?.text}"
+    private fun getDefaultNotificationMessage(type: NotificationType, details: NotificationDetails?, build: SRunningBuild?): String {
+        var message = "${details?.text}"
+
+        if (build != null) {
+            message += " - Build No: " + build.buildNumber
+
+            if (type == NotificationType.BuildFailed) {
+                message += "<br>"
+                message += build.compilationErrorMessages.first()
+            }
+        }
+
+        return message
     }
 
     /**
