@@ -42,6 +42,15 @@
                             <span class="smallNote">Source token from <a href="https://www.flowdock.com/api/sources" target="_blank">FlowDock</a>.</span>
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            <label for="token">Enable logger info messages:</label>
+                        </th>
+                        <td>
+                            <forms:checkbox name="enableLogInfoMessages" checked="${enableLogInfoMessages}" value="${enableLogInfoMessages}"/>
+                            <span class="smallNote">Enable plugin debugging</span>
+                        </td>
+                    </tr>
                 </table>
                 <div class="saveButtonsBlock">
                     <forms:submit type="button" label="Save" onclick="return flowdockAdmin.save()" />

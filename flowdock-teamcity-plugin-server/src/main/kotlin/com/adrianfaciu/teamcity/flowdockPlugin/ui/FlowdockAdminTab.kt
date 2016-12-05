@@ -18,12 +18,10 @@ class FlowdockAdminTab(val mainConfig: FlowdockMainConfig, val logger: LoggerMan
         this.tabTitle = "Flowdock Notifier"
 
         this.includeUrl = pluginDescriptor.getPluginResourcesPath("flowdockAdminTab.jsp")
-        logger.logInfoMessage("Include UR: ${this.includeUrl}")
 
         this.mainConfig.reloadConfiguration()
 
         register()
-        logger.logInfoMessage("Registered admin tab")
     }
 
     override fun fillModel(model: MutableMap<String, Any>, request: HttpServletRequest) {
@@ -31,6 +29,7 @@ class FlowdockAdminTab(val mainConfig: FlowdockMainConfig, val logger: LoggerMan
 
         model.put("token", this.mainConfig.apiToken ?: "")
         model.put("disabled", !(this.mainConfig.isEnabled ?: true))
+        model.put("enableLogInfoMessages", this.mainConfig.enableLogInfoMessages ?: false)
     }
 
     override fun getGroup(): String {

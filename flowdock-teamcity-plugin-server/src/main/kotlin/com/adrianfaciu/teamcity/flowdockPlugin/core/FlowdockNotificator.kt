@@ -26,7 +26,6 @@ class FlowdockNotificator(val notificationManager: FlowdockManager, val builder:
     }
 
     fun register(){
-        logger.logInfoMessage("Initialized flowdock notificator")
     }
 
     override fun getDisplayName(): String {

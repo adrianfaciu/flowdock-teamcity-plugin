@@ -9,6 +9,12 @@ import jetbrains.buildServer.serverSide.settings.ProjectSettingsManager
  * Should act as proxy for reading and using the settings
  */
 class FlowdockSettingsRepo(val mainSettings: FlowdockMainConfig, val projectSettingsManager : ProjectSettingsManager, val logger: LoggerManager) {
+
+    fun register() {
+        // Set log level
+        this.logger.infoMessageEnabled = this.mainSettings.enableLogInfoMessages ?: true
+    }
+
     fun getToken(projectId: String? = null): String? {
         var token = mainSettings.apiToken
         if (!projectId.isNullOrBlank()) {
@@ -31,9 +37,5 @@ class FlowdockSettingsRepo(val mainSettings: FlowdockMainConfig, val projectSett
 
     fun getApiEndpoint(): String {
         return "https://api.flowdock.com/messages"
-    }
-
-    fun isLogInfoEnabled(): Boolean {
-        return true
     }
 }

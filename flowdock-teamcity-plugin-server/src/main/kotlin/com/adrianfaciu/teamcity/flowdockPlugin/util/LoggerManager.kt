@@ -1,13 +1,14 @@
 package com.adrianfaciu.teamcity.flowdockPlugin.util
 
-import com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockSettingsRepo
 import jetbrains.buildServer.log.Loggers
 
-class LoggerManager(val settings: FlowdockSettingsRepo) {
+class LoggerManager() {
     val logger = Loggers.ACTIVITIES!!
 
+    var infoMessageEnabled = true
+
     fun logInfoMessage(message: String) {
-        if (!settings.isLogInfoEnabled())
+        if (!infoMessageEnabled)
             return
 
         logger.info("FlowdockNotifier: $message")

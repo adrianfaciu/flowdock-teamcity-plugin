@@ -41,6 +41,7 @@
           class="com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockProjectSettingsFactory"/>
 
     <bean id="flowdockSettingsRepo"
+          init-method="register"
           class="com.adrianfaciu.teamcity.flowdockPlugin.settings.FlowdockSettingsRepo"/>
 
     <bean id="logManager"

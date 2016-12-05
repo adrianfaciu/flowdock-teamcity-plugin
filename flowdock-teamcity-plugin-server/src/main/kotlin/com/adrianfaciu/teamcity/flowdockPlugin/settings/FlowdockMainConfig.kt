@@ -13,9 +13,11 @@ import java.io.File
 class FlowdockMainConfig(val serverPaths: ServerPaths, val logger: LoggerManager) : ChangeListener {
     var apiToken: String? = ""
     var isEnabled: Boolean? = true
+    var enableLogInfoMessages: Boolean? = false;
 
     private val ENABLED = "enabled"
     private val TOKEN = "token"
+    private val LOG_INFO = "enableLogInfoMessages"
 
     private val configDirectory = File(this.serverPaths.configDir, "flowdock")
     private val configFile = File(configDirectory, "flowdock-config.xml")
@@ -40,6 +42,7 @@ class FlowdockMainConfig(val serverPaths: ServerPaths, val logger: LoggerManager
                 logger.logInfoMessage("Processor parsing file: ${this.isEnabled.toString()} - ${this.apiToken}")
                 rootElement.setAttribute(ENABLED, this.isEnabled.toString())
                 rootElement.setAttribute(TOKEN, this.apiToken)
+                rootElement.setAttribute(LOG_INFO, this.enableLogInfoMessages.toString())
         })
     }
 
@@ -51,6 +54,7 @@ class FlowdockMainConfig(val serverPaths: ServerPaths, val logger: LoggerManager
     fun readFromNode(flowdockNode: Element?) {
         this.isEnabled = flowdockNode?.getAttribute(ENABLED)?.booleanValue ?: true
         this.apiToken = flowdockNode?.getAttribute(TOKEN)?.value ?: ""
+        this.enableLogInfoMessages = flowdockNode?.getAttribute(LOG_INFO)?.booleanValue ?: false
     }
 
     private fun loadXmlFile(configFile: File): Document? {

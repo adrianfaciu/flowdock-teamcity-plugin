@@ -23,7 +23,6 @@ class FlowdockController(val server: SBuildServer,
 
     fun register() {
         this.webManager.registerController("/flowdockNotifier/flowdockController.html", this)
-        pluginLogger.logInfoMessage("Registering admin controller")
     }
 
     override fun doHandle(request: HttpServletRequest, response: HttpServletResponse): ModelAndView? {
