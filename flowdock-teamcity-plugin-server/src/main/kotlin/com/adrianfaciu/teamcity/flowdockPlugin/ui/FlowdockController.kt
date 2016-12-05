@@ -32,7 +32,7 @@ class FlowdockController(val server: SBuildServer,
 
         if (action == "editSettings") {
             val token = request.getParameter("token")
-            pluginLogger.logInfoMessage("Save: $token")
+            pluginLogger.logInfoMessage("Save token: $token")
 
             this.mainConfig.apiToken = token
             this.mainConfig.save()

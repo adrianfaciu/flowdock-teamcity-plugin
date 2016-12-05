@@ -29,7 +29,7 @@ class FlowdockAdminTab(val mainConfig: FlowdockMainConfig, val logger: LoggerMan
 
         model.put("token", this.mainConfig.apiToken ?: "")
         model.put("disabled", !(this.mainConfig.isEnabled ?: true))
-        model.put("enableLogInfoMessages", this.mainConfig.enableLogInfoMessages ?: false)
+        model.put("enableLogInfoMessages", this.mainConfig.enableLogInfoMessages ?: true)
     }
 
     override fun getGroup(): String {

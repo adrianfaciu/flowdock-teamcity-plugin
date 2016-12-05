@@ -7,11 +7,11 @@ var flowdockAdmin = {
             return false;
         }
         jQuery.ajax({
-            url: jQuery("flowdockAdminForm").action,
+            url: $("flowdockAdminForm").action,
             data: {
                 action: "editSettings",
-                token: jQuery("token").value,
-                enableLogInfoMessages: jQuery("enableLogInfoMessages").value
+                token: $("token").value,
+                enableLogInfoMessages: $("enableLogInfoMessages").value
             },
             type: "POST"
         }).done(function () {
@@ -23,14 +23,14 @@ var flowdockAdmin = {
 
     validate: function () {
         var valid = true;
-        valid = valid || (jQuery("token").value && jQuery("token").value.length > 0);
+        valid = valid || ($("token").value && $("token").value.length > 0);
 
         return valid;
     },
 
     saveEnabled: function (isEnabled) {
         jQuery.ajax({
-            url: jQuery("flowdockAdminForm").action,
+            url: $("flowdockAdminForm").action,
             data: {
                 action: "changeEnabled",
                 flag: isEnabled
@@ -45,11 +45,11 @@ var flowdockAdmin = {
 
     saveProject: function () {
         jQuery.ajax({
-            url: jQuery("flowdockProjectForm").action,
+            url: $("flowdockProjectForm").action,
             data: {
                 action: "saveProjectSettings",
-                token: jQuery("token").value,
-                projectId: jQuery("projectId").value
+                token: $("token").value,
+                projectId: $("projectId").value
             },
             type: "POST"
         }).done(function () {
