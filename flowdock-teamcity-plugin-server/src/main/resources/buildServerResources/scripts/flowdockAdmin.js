@@ -10,7 +10,7 @@ var flowdockAdmin = {
             url: jQuery("flowdockAdminForm").action,
             data: {
                 action: "editSettings",
-                token: jQuery("token").value
+                token: jQuery("token").value,
                 enableLogInfoMessages: jQuery("enableLogInfoMessages").value
             },
             type: "POST"
